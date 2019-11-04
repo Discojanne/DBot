@@ -34,6 +34,8 @@ void DBAIModule::onStart()
 	//CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AnalyzeThread, NULL, 0, NULL); //Threaded version
 	AnalyzeThread();
 
+	Broodwar->setLocalSpeed(5);
+
 	//Send each worker to the mineral field that is closest to it
 	for (auto u : Broodwar->self()->getUnits())
 	{
