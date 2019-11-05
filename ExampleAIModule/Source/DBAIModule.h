@@ -12,6 +12,7 @@ DWORD WINAPI AnalyzeThread();
 
 using namespace BWAPI;
 using namespace BWTA;
+class TerranBot;
 
 class DBAIModule : public BWAPI::AIModule
 {
@@ -41,4 +42,7 @@ public:
 	void showPlayers();
 	void showForces();
 	Position findGuardPoint();
+
+private:
+	TerranBot* m_terran;
 };

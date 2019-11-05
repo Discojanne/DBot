@@ -1,4 +1,5 @@
 #include "DBAIModule.h" 
+#include "Races/TerranBot.h"
 using namespace BWAPI;
 
 bool analyzed;
@@ -35,31 +36,11 @@ void DBAIModule::onStart()
 	AnalyzeThread();
 
 	Broodwar->setLocalSpeed(5);
+	
+	m_terran = new TerranBot(&Broodwar);
 
-	//Send each worker to the mineral field that is closest to it
-	for (auto u : Broodwar->self()->getUnits())
-	{
-		if (u->getType().isWorker())
-		{
-			Unit closestMineral = NULL;
-			for (auto m : Broodwar->getMinerals())
-			{
-				if (closestMineral == NULL || u->getDistance(m) < u->getDistance(closestMineral))
-				{
-					closestMineral = m;
-				}
-			}
-			if (closestMineral != NULL)
-			{
-				u->rightClick(closestMineral);
-				Broodwar->printf("Send worker %d to mineral %d", u->getID(), closestMineral->getID());
-			}
-		}
-	}
 }
 
-//Called when a game is ended.
-//No need to change this.
 void DBAIModule::onEnd(bool isWinner)
 {
 	if (isWinner)
@@ -92,32 +73,59 @@ Position DBAIModule::findGuardPoint()
 	return choke->getCenter();
 }
 
-//This is the method called each frame. This is where the bot's logic
-//shall be called.
 void DBAIModule::onFrame()
 {
-	//Call every 100:th frame
-	if (Broodwar->getFrameCount() % 100 == 0)
+	// Call every n:th frame
+	if (Broodwar->getFrameCount() % 3 == 0)
 	{
-
-		Broodwar->sendText("Yeets");
-
-		//Order one of our workers to guard our chokepoint.
-		//Iterate through the list of units.
-		for (auto u : Broodwar->self()->getUnits())
-		{
-			//Check if unit is a worker.
-			if (u->getType().isWorker())
-			{
-				//Find guard point
-				Position guardPoint = findGuardPoint();
-				//Order the worker to move to the guard point
-				u->rightClick(guardPoint);
-				//Only send the first worker.
-				break;
+		BWAPI::Unitset units = Broodwar->self()->getUnits();
+		for (auto u : units) {
+			if (u->isBeingConstructed()) {
+				continue;
 			}
-		}
-	}
+
+			BWAPI::UnitType type = u->getType();
+			if (type.isWorker()) {
+				m_terran->manageWorker(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Command_Center) {
+				m_terran->manageCommandCenter(u);
+			}
+			/*else if (type == BWAPI::UnitTypes::Enum::Terran_Barracks) {
+				manageBarrack(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Marine) {
+				manageMarine(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Firebat) {
+				manageFirebat(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Medic) {
+				manageMedic(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Siege_Tank_Tank_Mode || type == BWAPI::UnitTypes::Enum::Terran_Siege_Tank_Siege_Mode) {
+				manageTank(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Wraith) {
+				manageWraith(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Factory) {
+				manageFactory(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Starport) {
+				manageFactory(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Academy) {
+				manageAcademy(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Engineering_Bay) {
+				manageEngineeringBay(u);
+			}
+			else if (type == BWAPI::UnitTypes::Enum::Terran_Machine_Shop) {
+				manageMachineShop(u);
+			}*/
+		} // for
+	} // if frame count
 
 	//Draw lines around regions, chokepoints etc.
 	if (analyzed)

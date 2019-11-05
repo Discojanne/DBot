@@ -97,9 +97,11 @@
   <ItemGroup>
     <ClCompile Include="Source\Dll.cpp" />
     <ClCompile Include="Source\DBAIModule.cpp" />
+    <ClCompile Include="Source\Races\TerranBot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\DBAIModule.h" />
+    <ClInclude Include="Source\Races\TerranBot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

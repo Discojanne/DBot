@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Races">
+      <UniqueIdentifier>{8e7d6591-75fa-482c-9879-d7303e9d3d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Races">
+      <UniqueIdentifier>{6f5cfb00-9069-4bcc-bc2b-87dbf7a97eba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Dll.cpp">
@@ -21,9 +27,15 @@
     <ClCompile Include="Source\DBAIModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Races\TerranBot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\DBAIModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Races\TerranBot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
