@@ -33,7 +33,7 @@ void TerranBot::manageWorker(BWAPI::Unit& u) {
 
 void TerranBot::manageCommandCenter(BWAPI::Unit& u) {
 	
-	int nMinerals = (*Broodwar)->self()->minerals();
+	int nMinerals = Broodwar->self()->minerals();
 	int scvMineralPrice = BWAPI::UnitType(BWAPI::UnitTypes::Enum::Terran_SCV).mineralPrice();
 
 	if (u->isIdle()) {
@@ -41,10 +41,10 @@ void TerranBot::manageCommandCenter(BWAPI::Unit& u) {
 
 		}
 		else {
-			if ((*Broodwar)->self()->completedUnitCount(BWAPI::UnitTypes::Enum::Terran_SCV) <= (20 + 3)) {
+			if (Broodwar->self()->completedUnitCount(BWAPI::UnitTypes::Enum::Terran_SCV) <= (20 + 3)) {
 				if (nMinerals >= scvMineralPrice) {
 					if (u->train(BWAPI::UnitTypes::Terran_SCV)) {
-						(*Broodwar)->printf("Command center %d began training a worker", u->getID());
+						Broodwar->printf("Command center %d began training a worker", u->getID());
 					}
 				}
 			}

@@ -12,5 +12,5 @@ public:
 	void manageCommandCenter(BWAPI::Unit& u);
 
 private:
-	BWAPI::GameWrapper* Broodwar;
+	BWAPI::GameWrapper Broodwar;
 };
